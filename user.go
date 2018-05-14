@@ -3,12 +3,11 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"log"
-	"net/http"
-
 	"github.com/gorilla/mux"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
+	"log"
+	"net/http"
 )
 
 type User struct {
@@ -18,7 +17,7 @@ type User struct {
 }
 
 func allUsers(w http.ResponseWriter, r *http.Request) {
-
+	log.Println(r.Method + " " + r.URL.RequestURI())
 	var users []User
 	db.Find(&users)
 
@@ -63,7 +62,7 @@ func deleteUser(w http.ResponseWriter, r *http.Request) {
 	var u User
 
 	if err := db.Where("Name = ?", vars["Name"]).First(&u).Error; err != nil {
-		log.Fatal(err.Error())
+		log.Println(err.Error())
 		json.NewEncoder(w).Encode(err.Error())
 
 	} else {
