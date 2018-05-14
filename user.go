@@ -17,7 +17,6 @@ type User struct {
 }
 
 func allUsers(w http.ResponseWriter, r *http.Request) {
-	log.Println(r.Method + " " + r.URL.RequestURI())
 	var users []User
 	db.Find(&users)
 
