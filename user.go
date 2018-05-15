@@ -17,6 +17,8 @@ type User struct {
 }
 
 func allUsers(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
 	var users []User
 	db.Find(&users)
 
@@ -66,13 +68,15 @@ func deleteUser(w http.ResponseWriter, r *http.Request) {
 
 	} else {
 		db.Delete(&u)
-		json.NewEncoder(w).Encode("Succesfully deleted")
+		json.NewEncoder(w).Encode("User Succesfully deleted")
 
 	}
 
 }
 
 func updateUser(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
 	vars := mux.Vars(r)
 	name := vars["name"]
 	email := vars["email"]
@@ -83,5 +87,5 @@ func updateUser(w http.ResponseWriter, r *http.Request) {
 	user.Email = email
 
 	db.Save(&user)
-	fmt.Fprintf(w, "Successfully Updated User")
+	fmt.Fprintf(w, "User Successfully Updated")
 }
